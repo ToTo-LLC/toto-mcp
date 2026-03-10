@@ -14,7 +14,7 @@ metadata:
 
 runtime: uvx
 uvxConfig:
-  package: 'nano-banana-mcp@latest'
+  package: 'toto-nano-banana-mcp@latest'
 
 env:
   - key: GEMINI_API_KEY
