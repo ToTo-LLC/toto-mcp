@@ -1,0 +1,24 @@
+name: Nano Banana MCP
+description: |
+  Generate images using Google Gemini 3.1 Flash. Provide a text prompt
+  and receive a PNG image.
+
+toolPreview:
+  - name: generate_image
+    description: Generate an image using Gemini. Returns the generated image.
+    params:
+      prompt: Text description of the image to generate
+
+metadata:
+  categories: AI Image Generation
+
+runtime: uvx
+uvxConfig:
+  package: 'nano-banana-mcp@latest'
+
+env:
+  - key: GEMINI_API_KEY
+    name: Gemini API Key
+    required: true
+    sensitive: true
+    description: Google Gemini API key for image generation
