@@ -8,6 +8,7 @@ toolPreview:
     description: Generate an image using Gemini. Returns the generated image.
     params:
       prompt: Text description of the image to generate
+      gemini_api_key: Google Gemini API key
 
 metadata:
   categories: AI Image Generation
@@ -15,10 +16,3 @@ metadata:
 runtime: uvx
 uvxConfig:
   package: 'toto-nano-banana-mcp@latest'
-
-env:
-  - key: GEMINI_API_KEY
-    name: Gemini API Key
-    required: true
-    sensitive: true
-    description: Google Gemini API key for image generation

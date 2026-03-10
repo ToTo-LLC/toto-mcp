@@ -1,27 +1,20 @@
-import os
-
-from dotenv import load_dotenv
 from fastmcp import FastMCP
 from fastmcp.utilities.types import Image
 from google import genai
 from google.genai import types
 
-load_dotenv()
-
 mcp = FastMCP(name="Nano Banana MCP")
 
 
-def _get_client() -> genai.Client:
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY environment variable is required.")
-    return genai.Client(api_key=api_key)
-
-
 @mcp.tool
-def generate_image(prompt: str) -> list[Image] | str:
-    """Generate an image using Gemini. Returns the generated image."""
-    client = _get_client()
+def generate_image(prompt: str, gemini_api_key: str) -> list[Image] | str:
+    """Generate an image using Gemini. Returns the generated image.
+
+    Args:
+        prompt: Text description of the image to generate.
+        gemini_api_key: Google Gemini API key.
+    """
+    client = genai.Client(api_key=gemini_api_key)
     response = client.models.generate_content(
         model="gemini-3.1-flash-image-preview",
         contents=prompt,
