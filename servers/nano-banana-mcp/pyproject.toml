@@ -1,6 +1,6 @@
 [project]
 name = "toto-nano-banana-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for image generation using Google Gemini"
 license = { text = "MIT" }
 authors = [{ name = "TomorrowToday" }]
