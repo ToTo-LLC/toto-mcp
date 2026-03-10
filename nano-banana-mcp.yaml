@@ -16,3 +16,4 @@ metadata:
 runtime: uvx
 uvxConfig:
   package: 'toto-nano-banana-mcp@latest'
+  command: nano-banana-mcp
