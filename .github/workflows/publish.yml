@@ -1,0 +1,50 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - '*-v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract package name from tag
+        id: meta
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          PACKAGE="${TAG%-v*}"
+          echo "package=$PACKAGE" >> "$GITHUB_OUTPUT"
+          echo "Publishing: $PACKAGE from servers/$PACKAGE"
+      - name: Verify package exists
+        run: |
+          if [ ! -f "servers/${{ steps.meta.outputs.package }}/pyproject.toml" ]; then
+            echo "No package found at servers/${{ steps.meta.outputs.package }}/"
+            exit 1
+          fi
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install build tools
+        run: pip install build
+      - name: Build package
+        working-directory: servers/${{ steps.meta.outputs.package }}
+        run: python -m build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: servers/${{ steps.meta.outputs.package }}/dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
